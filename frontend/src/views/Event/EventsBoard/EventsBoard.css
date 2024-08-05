@@ -1,9 +1,0 @@
-.events-board {
-  display: flex;
-  padding: 1.25rem;
-  flex-wrap: wrap;
-  flex: 1 1 0%;
-  gap: 1rem;
-  justify-self: center;
-  align-self: center;
-}
