@@ -1,16 +1,10 @@
 import { Card } from "../../../components";
+import { EventData } from "../../../types";
 import "./EventsBoard.css";
-
-interface EventData {
-  id: string;
-  title: string;
-  date: string;
-  description: string;
-}
 
 interface DashboardProps {
   events: EventData[];
-  onDelete: (id: string) => void;
+  onDelete: (eventId: string) => void;
   onEdit: (id: string) => void;
 }
 

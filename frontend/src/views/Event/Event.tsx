@@ -3,14 +3,10 @@ import { RingLoader } from "react-spinners";
 import { Controls } from "./Controls";
 import { EventsBoard } from "./EventsBoard";
 import { FormModal } from "../../components";
+import { deleteData, getData, postData, putData } from "../../apis";
+import { EventData } from "../../types";
 import "./Event.css";
-
-export interface EventData {
-  id: string;
-  title: string;
-  date: string;
-  description: string;
-}
+import toast from "react-hot-toast";
 
 const Event = () => {
   const [events, setEvents] = useState<EventData[]>([]);
@@ -25,24 +21,9 @@ const Event = () => {
   });
 
   useEffect(() => {
-    const getEvents: any = async () => {
-      setLoading(true);
-      try {
-        const response = await fetch("http://localhost:5000/events");
-
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
-
-        const data = await response.json();
-        return data;
-      } catch (error) {
-        console.error("Error:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-    getEvents().then((data: []) =>
+    setLoading(true);
+    getData("http://localhost:5000/events").then((data: []) => {
+      setLoading(false);
       data.forEach((event: any) => {
         setEvents((prevEvents) => [
           ...prevEvents,
@@ -53,8 +34,8 @@ const Event = () => {
             description: event.description,
           },
         ]);
-      })
-    );
+      });
+    });
   }, []);
 
   const handleAddButton = () => {
@@ -83,60 +64,24 @@ const Event = () => {
     setFormData(event);
   };
 
-  const handleDeleteButton = async (cardId: string) => {
+  const handleDeleteButton = async (eventId: string) => {
     try {
-      fetch(`http://localhost:5000/remove-card/${cardId}`, {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ cardId: cardId }),
-      }).then((response) => {
-        if (response.ok) {
-          setEvents((prevEvents) =>
-            prevEvents.filter((event) => event.id !== cardId)
-          );
-        } else {
-          throw new Error("Network response was not ok");
-        }
-      });
-    } catch (error) {
-      console.error("Error:", error);
+      await deleteData("http://localhost:5000/remove-card/", eventId);
+      toast.success("Event deleted successfully");
+      setEvents((prevEvents) =>
+        prevEvents.filter((item) => item.id !== eventId)
+      );
+    } catch (error: any) {
+      toast.error(error.message);
     }
   };
 
   const handlePost = async (data: EventData) => {
-    fetch("http://localhost:5000/add-card", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        console.log("Success:", data);
-      })
-      .catch((error) => {
-        console.error("Error:", error);
-      });
+    postData("http://localhost:5000/add-card", data);
   };
 
-  const handlePut = (data: EventData, cardId: string) => {
-    fetch(`http://localhost:5000/edit-card/${cardId}`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        console.log("Success:", data);
-      })
-      .catch((error) => {
-        console.error("Error:", error);
-      });
+  const handlePut = (data: EventData) => {
+    putData("http://localhost:5000/edit-card/", data);
     setEditing(false);
   };
 
@@ -168,9 +113,7 @@ const Event = () => {
         data={formData as any}
         isOpened={formOpened}
         onClose={() => handleClose()}
-        onSubmit={
-          editing ? (formInfo) => handlePut(formInfo, formData.id) : handlePost
-        }
+        onSubmit={editing ? (formInfo) => handlePut(formInfo) : handlePost}
       />
     </div>
   );

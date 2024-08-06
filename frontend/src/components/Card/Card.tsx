@@ -3,10 +3,10 @@ import { Button } from "../";
 import "./Card.css";
 
 interface CardProps {
-  onEdit: () => void;
   title: string;
   desc: string;
   date: string;
+  onEdit: () => void;
   onDelete: () => void;
 }
 
