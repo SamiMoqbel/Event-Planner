@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Fieldset } from "../index";
+import { Fieldset } from "../";
 import "./FormModal.css";
 
 interface FormModalProps {
@@ -66,7 +66,7 @@ const FormModal: React.FC<FormModalProps> = ({
             name="date"
             onChange={handleChange}
             val={formInfo.date}
-            isDate
+            type="date"
           />
           <Fieldset
             label="Description"

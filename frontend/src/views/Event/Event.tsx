@@ -14,9 +14,9 @@ export interface EventData {
 
 const Event = () => {
   const [events, setEvents] = useState<EventData[]>([]);
-  const [isEditing, setIsEditing] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
-  const [isFormOpened, setIsFormOpened] = useState(false);
+  const [editing, setEditing] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [formOpened, setFormOpened] = useState(false);
   const [formData, setFormData] = useState<EventData>({
     id: "",
     title: "",
@@ -26,7 +26,7 @@ const Event = () => {
 
   useEffect(() => {
     const getEvents: any = async () => {
-      setIsLoading(true);
+      setLoading(true);
       try {
         const response = await fetch("http://localhost:5000/events");
 
@@ -39,7 +39,7 @@ const Event = () => {
       } catch (error) {
         console.error("Error:", error);
       } finally {
-        setIsLoading(false);
+        setLoading(false);
       }
     };
     getEvents().then((data: []) =>
@@ -58,8 +58,8 @@ const Event = () => {
   }, []);
 
   const handleAddButton = () => {
-    setIsFormOpened(true);
-    setIsEditing(false);
+    setFormOpened(true);
+    setEditing(false);
     const today = new Date();
     const year = today.getFullYear();
     const month = (today.getMonth() + 1).toString().padStart(2, "0");
@@ -77,8 +77,8 @@ const Event = () => {
   };
 
   const handleShowInfoButton = (id: string) => {
-    setIsFormOpened(true);
-    setIsEditing(true);
+    setFormOpened(true);
+    setEditing(true);
     const event = events.find((event) => event.id === id) as EventData;
     setFormData(event);
   };
@@ -137,7 +137,7 @@ const Event = () => {
       .catch((error) => {
         console.error("Error:", error);
       });
-    setIsEditing(false);
+    setEditing(false);
   };
 
   const handleClose = () => {
@@ -147,13 +147,13 @@ const Event = () => {
       date: "",
       description: "",
     });
-    setIsFormOpened(false);
+    setFormOpened(false);
   };
 
   return (
     <div className="events-view">
       <Controls title="Events Dashboard" onAdd={handleAddButton} />
-      {isLoading ? (
+      {loading ? (
         <div className="loader-spinner">
           <RingLoader />
         </div>
@@ -166,12 +166,10 @@ const Event = () => {
       )}
       <FormModal
         data={formData as any}
-        isOpened={isFormOpened}
+        isOpened={formOpened}
         onClose={() => handleClose()}
         onSubmit={
-          isEditing
-            ? (formInfo) => handlePut(formInfo, formData.id)
-            : handlePost
+          editing ? (formInfo) => handlePut(formInfo, formData.id) : handlePost
         }
       />
     </div>

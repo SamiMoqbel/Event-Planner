@@ -1,4 +1,4 @@
-import { Button } from "../index";
+import { Button } from "../";
 
 import "./Card.css";
 
@@ -42,7 +42,7 @@ const Card: React.FC<CardProps> = ({ onEdit, title, desc, date, onDelete }) => {
           </p>
           <p>{date}</p>
         </div>
-        <Button onClick={onEdit} classes="info-button" label="Show Info" />
+        <Button onClick={onEdit} classes="info-button">Show Info</Button>
       </div>
     </div>
   );

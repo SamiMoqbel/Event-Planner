@@ -1,9 +1,9 @@
 import "./Header.css";
 
-const Header: React.FC<{ title: string }> = ({ title }) => {
+const Header: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   return (
     <header>
-      <h1>{title}</h1>
+      <h1>{children}</h1>
     </header>
   );
 };

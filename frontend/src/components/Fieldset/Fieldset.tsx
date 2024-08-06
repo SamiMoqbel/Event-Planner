@@ -1,14 +1,15 @@
+import { HTMLInputTypeAttribute } from "react";
 import "./Fieldset.css";
 
 interface FieldsetProps {
-  val: string;
+  val?: string;
   onChange: (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => void;
-  name: string;
-  label: string;
+  name?: string;
+  label?: string;
+  type?: HTMLInputTypeAttribute;
   isTextArea?: boolean;
-  isDate?: boolean;
 }
 
 const Fieldset: React.FC<FieldsetProps> = ({
@@ -17,7 +18,7 @@ const Fieldset: React.FC<FieldsetProps> = ({
   name,
   label,
   isTextArea = false,
-  isDate = false,
+  type = "text",
 }) => {
   return (
     <fieldset id="fieldset-container" className="fieldset-container">
@@ -31,18 +32,10 @@ const Fieldset: React.FC<FieldsetProps> = ({
           value={val}
           onChange={(e) => onChange(e)}
         />
-      ) : isDate ? (
-        <input
-          className="input-styles"
-          type="date"
-          name={name}
-          value={val}
-          onChange={(e) => onChange(e)}
-        />
       ) : (
         <input
           className="input-styles"
-          type="text"
+          type={type}
           name={name}
           maxLength={30}
           value={val}
