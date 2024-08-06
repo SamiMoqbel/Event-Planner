@@ -1,0 +1,9 @@
+.dashboard-container{
+    display: flex;
+    flex-direction: column;
+}
+
+.outlet-container{
+    display: flex;
+    flex-wrap: wrap;
+}
