@@ -5,7 +5,7 @@ import "./EventsBoard.css";
 interface DashboardProps {
   events: EventData[];
   onDelete: (eventId: string) => void;
-  onEdit: (id: string) => void;
+  onEdit: (event : EventData) => void;
 }
 
 const Dashboard: React.FC<DashboardProps> = ({ events, onDelete, onEdit }) => {
@@ -18,7 +18,7 @@ const Dashboard: React.FC<DashboardProps> = ({ events, onDelete, onEdit }) => {
             title={event.title}
             date={event.date}
             desc={event.description}
-            onEdit={() => onEdit(event.id)}
+            onEdit={() => onEdit(event)}
             onDelete={() => onDelete(event.id)}
           />
         ))}

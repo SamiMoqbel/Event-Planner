@@ -2,11 +2,12 @@ import { useEffect, useState } from "react";
 import { RingLoader } from "react-spinners";
 import { Controls } from "./Controls";
 import { EventsBoard } from "./EventsBoard";
-import { FormModal } from "../../components";
 import { deleteData, getData, postData, putData } from "../../apis";
 import { EventData } from "../../types";
 import "./Event.css";
 import toast from "react-hot-toast";
+import { getDate } from "../../utils";
+import { Form } from "../Form";
 
 const Event = () => {
   const [events, setEvents] = useState<EventData[]>([]);
@@ -22,30 +23,34 @@ const Event = () => {
 
   useEffect(() => {
     setLoading(true);
-    getData("http://localhost:5000/events").then((data: []) => {
-      setLoading(false);
-      data.forEach((event: any) => {
-        setEvents((prevEvents) => [
-          ...prevEvents,
-          {
-            id: event._id,
-            title: event.title,
-            date: event.date,
-            description: event.description,
-          },
-        ]);
-      });
-    });
+    const getEvent = async () => {
+      try {
+        const data = await getData();
+        setLoading(false);
+        data.forEach((event: any) => {
+          setEvents((prevEvents) => [
+            ...prevEvents,
+            {
+              id: event._id,
+              title: event.title,
+              date: event.date,
+              description: event.description,
+            },
+          ]);
+        });
+      } catch (error: any) {
+        toast.error(error.message);
+        setLoading(false);
+      }
+    };
+
+    getEvent();
   }, []);
 
   const handleAddButton = () => {
     setFormOpened(true);
     setEditing(false);
-    const today = new Date();
-    const year = today.getFullYear();
-    const month = (today.getMonth() + 1).toString().padStart(2, "0");
-    const day = today.getDate().toString().padStart(2, "0");
-    const date = `${year}-${month}-${day}`;
+    const date = getDate();
 
     const formInfo = {
       id: "",
@@ -57,16 +62,15 @@ const Event = () => {
     setFormData(formInfo);
   };
 
-  const handleShowInfoButton = (id: string) => {
+  const handleShowInfoButton = (event: EventData) => {
     setFormOpened(true);
     setEditing(true);
-    const event = events.find((event) => event.id === id) as EventData;
     setFormData(event);
   };
 
   const handleDeleteButton = async (eventId: string) => {
     try {
-      await deleteData("http://localhost:5000/remove-card/", eventId);
+      await deleteData(eventId);
       toast.success("Event deleted successfully");
       setEvents((prevEvents) =>
         prevEvents.filter((item) => item.id !== eventId)
@@ -77,12 +81,28 @@ const Event = () => {
   };
 
   const handlePost = async (data: EventData) => {
-    postData("http://localhost:5000/add-card", data);
+    try {
+      await postData(data);
+      toast.success("Event Added successfully");
+      setEvents((prevEvents) => [...prevEvents, data]);
+      setFormOpened(false);
+    } catch (error: any) {
+      toast.error(error.message);
+    }
   };
 
-  const handlePut = (data: EventData) => {
-    putData("http://localhost:5000/edit-card/", data);
-    setEditing(false);
+  const handlePut = async (data: EventData) => {
+    try {
+      await putData(data);
+      setEditing(false);
+      toast.success("Event Edited successfully");
+      setEvents((prevEvents) =>
+        prevEvents.map((item) => (item.id === data.id ? data : item))
+      );
+      setFormOpened(false);
+    } catch (error: any) {
+      toast.error(error.message);
+    }
   };
 
   const handleClose = () => {
@@ -109,12 +129,13 @@ const Event = () => {
           onDelete={handleDeleteButton}
         />
       )}
-      <FormModal
-        data={formData as any}
-        isOpened={formOpened}
-        onClose={() => handleClose()}
-        onSubmit={editing ? (formInfo) => handlePut(formInfo) : handlePost}
-      />
+      {formOpened && (
+        <Form
+          data={formData}
+          onClose={() => handleClose()}
+          onSubmit={editing ? (formInfo) => handlePut(formInfo) : handlePost}
+        />
+      )}
     </div>
   );
 };
