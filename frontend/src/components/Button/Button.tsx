@@ -6,7 +6,7 @@ interface ButtonProps {
   classes?: string;
 }
 
-const Button: React.FC<ButtonProps> = ({ children, classes, onClick }) => {
+export const Button: React.FC<ButtonProps> = ({ children, classes, onClick }) => {
   return (
     <button
       id="custom-button"
@@ -18,4 +18,3 @@ const Button: React.FC<ButtonProps> = ({ children, classes, onClick }) => {
   );
 };
 
-export default Button;

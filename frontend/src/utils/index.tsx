@@ -1,2 +1,2 @@
-export * from './getDate';
-export * from './EventController';
+export * from './Date';
+export * from './Controller';

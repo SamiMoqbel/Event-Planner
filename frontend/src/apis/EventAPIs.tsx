@@ -1,96 +1,32 @@
 import { EventData } from "../types";
+import { sendRequest } from "../utils";
 
-export const getData = async (): Promise<any> => {
-  return new Promise(async (resolve, reject) => {
-    try {
-      const response = await fetch("http://localhost:5000/events/");
-
-      if (response.ok) {
-        const responseData = await response.json();
-        console.log("Success:", responseData);
-        resolve(responseData);
-      } else {
-        const errorText = await response.text();
-        console.error("Error:", errorText);
-        reject(new Error("Network response was not ok"));
-      }
-    } catch (error) {
-      console.error("Error:", error);
-      reject(error);
-    }
-  });
+export const getData = async (options: {
+  resolved: any;
+  rejected: any;
+}): Promise<any> => {
+  return sendRequest("/api/events/", "GET", options);
 };
 
-export const postData = async (data: EventData): Promise<any> => {
-  return new Promise(async (resolve, reject) => {
-    try {
-      const response = await fetch("http://localhost:5000/add-card", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-      });
-
-      if (response.ok) {
-        const responseData = await response.json();
-        console.log("Success:", responseData);
-        resolve(responseData);
-      } else {
-        const errorText = await response.text();
-        console.error("Error:", errorText);
-        reject(new Error("Network response was not ok"));
-      }
-    } catch (error) {
-      console.error("Error:", error);
-      reject(error);
-    }
-  });
+export const postData = async (
+  data: EventData,
+  options: { resolved: any; rejected: any }
+): Promise<any> => {
+  return sendRequest("/api/add-card", "POST", options, data);
 };
 
-export const putData: any = async (data: EventData): Promise<any> => {
-  fetch(`http://localhost:5000/edit-card/${data.id}`, {
-    method: "PUT",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(data),
-  })
-    .then((response) => response.json())
-    .then((data) => {
-      console.log("Success:", data);
-    })
-    .catch((error) => {
-      console.error("Error:", error);
-    });
+export const putData = async (
+  data: EventData,
+  options: { resolved: any; rejected: any }
+): Promise<any> => {
+  return sendRequest(`/api/edit-card/${data.id}`, "PUT", options, data);
 };
 
-export const deleteData = (eventID: string): Promise<any> => {
-  return new Promise(async (resolve, reject) => {
-    try {
-      const response = await fetch(
-        `http://localhost:5000/remove-card/${eventID}`,
-        {
-          method: "DELETE",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ cardId: eventID }),
-        }
-      );
-
-      if (response.ok) {
-        const responseData = await response.json();
-        console.log("Success:", responseData);
-        resolve(responseData);
-      } else {
-        const errorText = await response.text();
-        console.error("Error:", errorText);
-        reject(new Error("Network response was not ok"));
-      }
-    } catch (error) {
-      console.error("Error:", error);
-      reject(error);
-    }
+export const deleteData = async (
+  eventID: string,
+  options: { resolved: any; rejected: any }
+) => {
+  return await sendRequest(`/api/remove-card/${eventID}`, "DELETE", options, {
+    cardId: eventID,
   });
 };

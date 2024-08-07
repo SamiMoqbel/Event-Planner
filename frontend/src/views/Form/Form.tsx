@@ -31,30 +31,33 @@ export const Form: React.FC<FormProps> = ({
     setFormInfo((prev: any) => ({ ...prev, [name]: value }));
   };
 
+  const failure = (error: any) => {
+    toast.error(error.message);
+  };
+
+  const successEdit = (data: any) => {
+    toast.success("Event Edited successfully");
+    setEvents((prevEvents: any[]) =>
+      prevEvents.map((item) =>
+        item.id === data._id ? (data as EventData) : item
+      )
+    );
+    setFormOpened(false);
+  };
+
+  const successAdd = () => {
+    toast.success("Event Added successfully");
+    setEvents((prevEvents: any) => [...prevEvents, data]);
+    setFormOpened(false);
+  };
+
   const handlePost = async (data: EventData) => {
-    try {
-      await postData(data);
-      toast.success("Event Added successfully");
-      setEvents((prevEvents: any) => [...prevEvents, data]);
-      setFormOpened(false);
-    } catch (error: any) {
-      toast.error(error.message);
-    }
+    await postData(data, { resolved: successAdd, rejected: failure });
   };
 
   const handlePut = async (data: EventData) => {
-    try {
-      await putData(data);
-      toast.success("Event Edited successfully");
-      setEvents((prevEvents: any[]) =>
-        prevEvents.map((item) => (item.id === data.id ? data : item))
-      );
-      setFormOpened(false);
-    } catch (error: any) {
-      toast.error(error.message);
-    }
+    await putData(data, { resolved: successEdit, rejected: failure });
   };
-  
 
   const handleSubmitClick = (event: React.MouseEvent) => {
     event.preventDefault();

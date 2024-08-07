@@ -3,7 +3,7 @@ import { Footer, Header, LeftNav } from "../";
 
 import "./Dashboard.scss";
 
-const Dashboard = () => {
+export const Dashboard = () => {
   return (
     <div id="dashboard-container" className="dashboard-container">
       <Header>Event Planner</Header>
@@ -16,4 +16,3 @@ const Dashboard = () => {
   );
 };
 
-export default Dashboard;

@@ -5,7 +5,7 @@ interface FormModalProps {
   onClose?: () => void;
 }
 
-const FormModal: React.FC<FormModalProps> = ({ onClose, children }) => {
+export const FormModal: React.FC<FormModalProps> = ({ onClose, children }) => {
   const handleOutlayerClose = (event: React.MouseEvent) => {
     event.preventDefault();
     if (event.target === event.currentTarget && onClose) {
@@ -26,4 +26,3 @@ const FormModal: React.FC<FormModalProps> = ({ onClose, children }) => {
   );
 };
 
-export default FormModal;

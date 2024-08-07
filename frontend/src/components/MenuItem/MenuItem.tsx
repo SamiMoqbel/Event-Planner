@@ -1,8 +1,7 @@
 import { NavLink } from "react-router-dom";
-
 import "./MenuItem.scss";
 
-const MenuItem: React.FC<{ to: string; label: string }> = ({ to, label }) => {
+export const MenuItem: React.FC<{ to: string; label: string }> = ({ to, label }) => {
   return (
     <NavLink
       to={to}
@@ -12,5 +11,3 @@ const MenuItem: React.FC<{ to: string; label: string }> = ({ to, label }) => {
     </NavLink>
   );
 };
-
-export default MenuItem;

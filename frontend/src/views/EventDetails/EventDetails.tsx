@@ -15,20 +15,23 @@ export const EventDetails: React.FC<EventDetailsProps> = ({
   onEdit,
   setEvents,
 }) => {
+  const successDelete = () => {
+    toast.success(`Event deleted successfully`);
+    setEvents((prevEvents: any[]) =>
+      prevEvents.filter((item) => item.id !== event.id)
+    );
+  };
+
+  const failDelete = (error: any) => {
+    toast.error(error.message);
+  };
+
   const handleDeleteButton = async (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
     eventId: string
   ) => {
     e.preventDefault();
-    try {
-      await deleteData(eventId);
-      toast.success("Event deleted successfully");
-      setEvents((prevEvents: any[]) =>
-        prevEvents.filter((item) => item.id !== eventId)
-      );
-    } catch (error: any) {
-      toast.error(error.message);
-    }
+    deleteData(eventId, { resolved: successDelete, rejected: failDelete });
   };
 
   const today = new Date();

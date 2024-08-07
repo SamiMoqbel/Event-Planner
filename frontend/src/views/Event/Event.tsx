@@ -20,27 +20,30 @@ const Event = () => {
     description: "",
   });
 
+  const loadSuccess = (data: any) => {
+    setLoading(false);
+    data.forEach((event: any) => {
+      setEvents((prevEvents) => [
+        ...prevEvents,
+        {
+          id: event._id,
+          title: event.title,
+          date: event.date,
+          description: event.description,
+        },
+      ]);
+    });
+  };
+
+  const loadFail = (error: any) => {
+    toast.error(error.message);
+    setLoading(false);
+  };
+
   useEffect(() => {
     setLoading(true);
     const getEvent = async () => {
-      try {
-        const data = await getData();
-        setLoading(false);
-        data.forEach((event: any) => {
-          setEvents((prevEvents) => [
-            ...prevEvents,
-            {
-              id: event._id,
-              title: event.title,
-              date: event.date,
-              description: event.description,
-            },
-          ]);
-        });
-      } catch (error: any) {
-        toast.error(error.message);
-        setLoading(false);
-      }
+      await getData({ resolved: loadSuccess, rejected: loadFail });
     };
 
     getEvent();

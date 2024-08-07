@@ -12,7 +12,7 @@ interface FieldsetProps {
   isTextArea?: boolean;
 }
 
-const Fieldset: React.FC<FieldsetProps> = ({
+export const Fieldset: React.FC<FieldsetProps> = ({
   val,
   onChange,
   name,
@@ -46,4 +46,3 @@ const Fieldset: React.FC<FieldsetProps> = ({
   );
 };
 
-export default Fieldset;
