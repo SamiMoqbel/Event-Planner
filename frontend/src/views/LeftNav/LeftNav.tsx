@@ -1,7 +1,7 @@
 import eventImg from "../../assets/menuImage.png";
 import { MenuItem } from "../../components";
 
-import "./LeftNav.css";
+import "./LeftNav.scss";
 
 const LeftNav = () => {
   return (

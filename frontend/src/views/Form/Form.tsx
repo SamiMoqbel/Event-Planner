@@ -1,13 +1,23 @@
 import { useEffect, useState } from "react";
 import { Fieldset, FormModal } from "../../components";
+import { EventData } from "../../types";
+import { postData, putData } from "../../apis";
+import toast from "react-hot-toast";
+import "./Form.scss";
 
 interface FormProps {
   data?: any;
   onClose: () => void;
-  onSubmit: (formInfo: any, id?: string) => void;
+  setEvents?: any;
+  setFormOpened?: any;
 }
 
-export const Form: React.FC<FormProps> = ({ data, onClose, onSubmit }) => {
+export const Form: React.FC<FormProps> = ({
+  data,
+  onClose,
+  setEvents,
+  setFormOpened,
+}) => {
   const [formInfo, setFormInfo] = useState(data);
 
   useEffect(() => {
@@ -21,9 +31,34 @@ export const Form: React.FC<FormProps> = ({ data, onClose, onSubmit }) => {
     setFormInfo((prev: any) => ({ ...prev, [name]: value }));
   };
 
+  const handlePost = async (data: EventData) => {
+    try {
+      await postData(data);
+      toast.success("Event Added successfully");
+      setEvents((prevEvents: any) => [...prevEvents, data]);
+      setFormOpened(false);
+    } catch (error: any) {
+      toast.error(error.message);
+    }
+  };
+
+  const handlePut = async (data: EventData) => {
+    try {
+      await putData(data);
+      toast.success("Event Edited successfully");
+      setEvents((prevEvents: any[]) =>
+        prevEvents.map((item) => (item.id === data.id ? data : item))
+      );
+      setFormOpened(false);
+    } catch (error: any) {
+      toast.error(error.message);
+    }
+  };
+  
+
   const handleSubmitClick = (event: React.MouseEvent) => {
     event.preventDefault();
-    onSubmit(formInfo, data?.id);
+    formInfo.id ? handlePut(formInfo) : handlePost(formInfo);
   };
 
   const handleCancelClick = (event: React.MouseEvent) => {
@@ -31,7 +66,7 @@ export const Form: React.FC<FormProps> = ({ data, onClose, onSubmit }) => {
     onClose();
     console.log("Cancelled");
   };
-  
+
   return (
     <div>
       <FormModal onClose={onClose}>

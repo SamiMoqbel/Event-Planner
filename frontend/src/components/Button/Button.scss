@@ -1,0 +1,15 @@
+$color_1: white;
+$background-color_1: rgb(118, 171, 174);
+
+.custom-button {
+  background-color: $background-color_1;
+  color: $color_1;
+  border-radius: 0.375rem;
+  &:hover {
+    opacity: 0.9;
+  }
+  &:active {
+    scale: 0.95;
+    font-size: 0.9rem;
+  }
+}

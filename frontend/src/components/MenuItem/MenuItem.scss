@@ -7,12 +7,10 @@
   background-color: #1e3a8a;
   cursor: pointer;
   user-select: none;
+  &:hover {
+    opacity: 0.8;
+  }
 }
-
-.menu-item:hover {
-  opacity: 0.8;
-}
-
 .selected {
   background-color: rgb(37, 99, 235);
   opacity: 0.75;

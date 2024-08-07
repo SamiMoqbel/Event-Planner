@@ -1,6 +1,6 @@
 import { NavLink } from "react-router-dom";
 
-import "./MenuItem.css";
+import "./MenuItem.scss";
 
 const MenuItem: React.FC<{ to: string; label: string }> = ({ to, label }) => {
   return (

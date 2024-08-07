@@ -1,4 +1,4 @@
-import "./FormModal.css";
+import "./FormModal.scss";
 
 interface FormModalProps {
   children?: React.ReactNode;

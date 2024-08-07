@@ -1,5 +1,5 @@
 import { HTMLInputTypeAttribute } from "react";
-import "./Fieldset.css";
+import "./Fieldset.scss";
 
 interface FieldsetProps {
   val?: string;

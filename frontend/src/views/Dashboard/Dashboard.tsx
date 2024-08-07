@@ -1,7 +1,7 @@
 import { Outlet } from "react-router-dom";
 import { Footer, Header, LeftNav } from "../";
 
-import "./Dashboard.css";
+import "./Dashboard.scss";
 
 const Dashboard = () => {
   return (

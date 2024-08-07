@@ -1,0 +1,25 @@
+.outer-layer {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0, 0, 0, 0.5);;
+	position: fixed;
+	top: 0;
+	left: 0;
+}
+.form-dialog {
+	width: 50%;
+	height: 75%;
+	background-color: rgb(118, 171, 174);;
+	form {
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		width: 100%;
+		height: 100%;
+		gap: 1.75rem;
+	}
+}
