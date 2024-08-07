@@ -45,7 +45,7 @@ export const Form: React.FC<FormProps> = ({
     setFormOpened(false);
   };
 
-  const successAdd = () => {
+  const successAdd = (data: any) => {
     toast.success("Event Added successfully");
     setEvents((prevEvents: any) => [...prevEvents, data]);
     setFormOpened(false);
@@ -67,7 +67,6 @@ export const Form: React.FC<FormProps> = ({
   const handleCancelClick = (event: React.MouseEvent) => {
     event.preventDefault();
     onClose();
-    console.log("Cancelled");
   };
 
   return (
