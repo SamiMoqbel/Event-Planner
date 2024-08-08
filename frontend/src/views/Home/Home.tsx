@@ -1,10 +1,10 @@
-import "./Home.css";
+import "./Home.scss";
 
 const Home = () => {
   return (
     <div className="home-container ">
-      <h1 className="text-4xl font-bold text-center">Never Miss an event!</h1>
-      <p className="text-center mt-5 mx-20 text-sm ">
+      <h1>Never Miss an event!</h1>
+      <p>
         Lorem ipsum dolor, sit amet consectetur adipisicing elit. Dolorem iure
         provident explicabo doloribus repudiandae pariatur, dolore nam iusto
         minima, quibusdam deleniti distinctio sequi vel expedita animi? Eum

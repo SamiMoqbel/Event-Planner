@@ -1,35 +1,31 @@
-import { Card } from "../../../components";
-import "./EventsBoard.css";
+import { EventData } from "../../../types";
+import { EventDetails } from "../../EventDetails";
+import "./EventsBoard.scss";
 
-interface EventData {
-  id: string;
-  title: string;
-  date: string;
-  description: string;
-}
-
-interface DashboardProps {
+interface EventsBoardProps {
   events: EventData[];
-  onDelete: (id: string) => void;
-  onEdit: (id: string) => void;
+  onEdit: (event: EventData) => void;
+  setEvents?: any;
 }
 
-const Dashboard: React.FC<DashboardProps> = ({ events, onDelete, onEdit }) => {
+const EventsBoard: React.FC<EventsBoardProps> = ({
+  events,
+  onEdit,
+  setEvents,
+}) => {
   return (
     <div id="events-board" className="events-board">
       {events.length > 0 &&
         events.map((event) => (
-          <Card
+          <EventDetails
             key={event.id}
-            title={event.title}
-            date={event.date}
-            desc={event.description}
-            onEdit={() => onEdit(event.id)}
-            onDelete={() => onDelete(event.id)}
+            event={event}
+            onEdit={() => onEdit(event)}
+            setEvents={setEvents}
           />
         ))}
     </div>
   );
 };
 
-export default Dashboard;
+export default EventsBoard;

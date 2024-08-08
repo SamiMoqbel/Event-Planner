@@ -1,21 +1,20 @@
-import "./Button.css";
+import "./Button.scss";
 
 interface ButtonProps {
-    onClick: () => void,
-    label: string,
-    classes?: string,
+  onClick?: () => void;
+  children: React.ReactNode;
+  classes?: string;
 }
 
-const Button: React.FC<ButtonProps> = ({ label ,classes, onClick }) => {
+export const Button: React.FC<ButtonProps> = ({ children, classes, onClick }) => {
   return (
     <button
       id="custom-button"
       onClick={onClick}
       className={`${classes} custom-button`}
     >
-      {label}
+      {children}
     </button>
   );
 };
 
-export default Button;

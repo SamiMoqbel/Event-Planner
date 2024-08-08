@@ -5,3 +5,4 @@ export * from "./LeftNav";
 export * from "./Dashboard";
 export * from "./Event";
 export * from "./Home";
+export * from "./EventDetails";

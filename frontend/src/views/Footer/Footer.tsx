@@ -1,25 +1,7 @@
-import "./Footer.css";
+import "./Footer.scss";
 
-interface FooterProps {
-  project?: string;
-  owner?: string;
-  year?: number;
-  supervisor?: string;
-}
-
-const Footer: React.FC<FooterProps> = ({
-  project = "Event Planner",
-  owner = "Sami Moqbel",
-  year = 2024,
-  supervisor = "George Khoury",
-}) => {
-  return (
-    <footer>
-      {`${project}© ${year} ${owner} ${
-        supervisor ? `supervised by ${supervisor}` : ""
-      } `}
-    </footer>
-  );
+const Footer: React.FC<{ children?: React.ReactNode }> = ({ children }) => {
+  return <footer>{children}</footer>;
 };
 
 export default Footer;

@@ -4,21 +4,18 @@
   align-items: center;
   height: 5rem;
   background-color: #1e3a8a;
+  h2 {
+    padding: 0.25rem 0.5rem;
+    margin: 0 1.5rem;
+    font-size: 1.5rem;
+    line-height: 2rem;
+    color: #ffffff;
+  }
 }
-
-.controls-container h2 {
-  padding: 0.25rem 0.5rem;
-  margin: 0 1.5rem;
-  font-size: 1.5rem;
-  line-height: 2rem;
-  color: #ffffff;
-}
-
 .add-button {
   padding-top: 0.25rem;
   padding-bottom: 0.25rem;
   padding-left: 0.5rem;
   padding-right: 0.5rem;
-
   margin: 0 1.5rem;
 }
