@@ -43,7 +43,7 @@ const Event = () => {
   useEffect(() => {
     setLoading(true);
     const getEvent = async () => {
-      await getData({ resolved: loadSuccess, rejected: loadFail });
+      await getData({ onSuccess: loadSuccess, onFailure: loadFail });
     };
 
     getEvent();

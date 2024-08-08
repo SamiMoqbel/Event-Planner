@@ -31,7 +31,7 @@ export const EventDetails: React.FC<EventDetailsProps> = ({
     eventId: string
   ) => {
     e.preventDefault();
-    deleteData(eventId, { resolved: successDelete, rejected: failDelete });
+    deleteData(eventId, { onSuccess: successDelete, onFailure: failDelete });
   };
 
   const today = new Date();

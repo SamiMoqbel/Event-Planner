@@ -31,11 +31,11 @@ export const Form: React.FC<FormProps> = ({
     setFormInfo((prev: any) => ({ ...prev, [name]: value }));
   };
 
-  const failure = (error: any) => {
+  const onFailure = (error: any) => {
     toast.error(error.message);
   };
 
-  const successEdit = (data: any) => {
+  const onEditSuccess = (data: any) => {
     toast.success("Event Edited successfully");
     setEvents((prevEvents: any[]) =>
       prevEvents.map((item) =>
@@ -45,18 +45,18 @@ export const Form: React.FC<FormProps> = ({
     setFormOpened(false);
   };
 
-  const successAdd = () => {
+  const onAddSuccess = () => {
     toast.success("Event Added successfully");
     setEvents((prevEvents: any) => [...prevEvents, data]);
     setFormOpened(false);
   };
 
   const handlePost = async (data: EventData) => {
-    await postData(data, { resolved: successAdd, rejected: failure });
+    await postData(data, { onSuccess: onAddSuccess, onFailure: onFailure });
   };
 
   const handlePut = async (data: EventData) => {
-    await putData(data, { resolved: successEdit, rejected: failure });
+    await putData(data, { onSuccess: onEditSuccess, onFailure: onFailure });
   };
 
   const handleSubmitClick = (event: React.MouseEvent) => {
