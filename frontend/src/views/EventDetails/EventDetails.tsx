@@ -15,14 +15,14 @@ export const EventDetails: React.FC<EventDetailsProps> = ({
   onEdit,
   setEvents,
 }) => {
-  const successDelete = () => {
+  const onDeleteSuccess = () => {
     toast.success(`Event deleted successfully`);
     setEvents((prevEvents: any[]) =>
       prevEvents.filter((item) => item.id !== event.id)
     );
   };
 
-  const failDelete = (error: any) => {
+  const onDeleteFailure = (error: any) => {
     toast.error(error.message);
   };
 
@@ -31,7 +31,10 @@ export const EventDetails: React.FC<EventDetailsProps> = ({
     eventId: string
   ) => {
     e.preventDefault();
-    deleteData(eventId, { onSuccess: successDelete, onFailure: failDelete });
+    deleteData(eventId, {
+      onSuccess: onDeleteSuccess,
+      onFailure: onDeleteFailure,
+    });
   };
 
   const today = new Date();

@@ -51,10 +51,8 @@ const Event = () => {
 
   const handleFormOpen = (event?: EventData) => {
     if (event) {
-      console.log("edit event");
       setFormData(event);
     } else {
-      console.log("add event");
       const date = getDate();
       setFormData({
         id: "",
