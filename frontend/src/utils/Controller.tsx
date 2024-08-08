@@ -3,7 +3,10 @@ import axios, { Method } from "axios";
 export const sendRequest = async (
   url: string,
   method: Method,
-  options: { onSuccess: (data: any) => void; onFailure: (error: any) => void },
+  options: {
+    onSuccess?: (data: any) => void;
+    onFailure?: (error: any) => void;
+  },
   data?: any
 ) => {
   try {
@@ -16,8 +19,12 @@ export const sendRequest = async (
       data,
     });
 
-    options.onSuccess(response.data);
+    if (options.onSuccess) {
+      options.onSuccess(response.data);
+    }
   } catch (error: any) {
-    options.onFailure(error.response ? error.response.data : error.message);
+    if (options.onFailure) {
+      options.onFailure(error.response ? error.response.data : error.message);
+    }
   }
 };
